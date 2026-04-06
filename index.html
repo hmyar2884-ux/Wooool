@@ -51,15 +51,18 @@ button {
 <div class="container">
   <h2>إنشاء الاسم الميداني</h2>
 
+  <!-- الكود الأول -->
+  <input type="text" id="code" placeholder="مثال: CD">
+
   <!-- الرقم -->
-  <input type="number" id="number" placeholder="أدخل الرقم">
+  <input type="number" id="number" placeholder="مثال: 220">
 
   <label>
-    <input type="checkbox" id="fourDigits"> 4 أرقام (0000)
+    <input type="checkbox" id="fourDigits"> 4 أرقام (0220)
   </label>
 
   <!-- القسم -->
-  <select id="unit" onchange="showUnitNumber()">
+  <select id="unit">
     <option value="">--- اختر القسم ---</option>
     <option>العمليات</option>
     <option>نائب العمليات</option>
@@ -70,36 +73,15 @@ button {
     <option>رمح</option>
     <option>حد</option>
     <option>سلاح</option>
+    <option>مراقب جوي</option>
+    <option>مراقب ارضي</option>
     <option>سند</option>
     <option>غفوة</option>
   </select>
 
-  <!-- رقم القسم -->
-  <div id="unitNumberBox" style="display:none;">
-    <select id="unitNumber">
-      <option value="">--- رقم القسم ---</option>
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-    </select>
-  </div>
-
-  <!-- الدور -->
-  <select id="role">
-    <option value="">--- نوع المهمة ---</option>
-    <option>مراقب جوي</option>
-    <option>مراقب ارضي</option>
-  </select>
-
-  <!-- المهمة -->
-  <select id="task">
-    <option value="">--- اختر المهمة ---</option>
-    <option>تعديل</option>
-    <option>تزويد</option>
-    <option>شراء تأمين صحي</option>
-    <option>استلام ترقية</option>
+  <!-- رقم القسم 1-20 -->
+  <select id="unitNumber">
+    <option value="">--- رقم القسم ---</option>
   </select>
 
   <!-- الحرف -->
@@ -121,28 +103,25 @@ button {
 </div>
 
 <script>
-function showUnitNumber() {
-  let unit = document.getElementById("unit").value;
-  let box = document.getElementById("unitNumberBox");
-
-  if (unit) {
-    box.style.display = "block";
-  } else {
-    box.style.display = "none";
-  }
+// توليد الأرقام من 1 إلى 20
+let unitSelect = document.getElementById("unitNumber");
+for (let i = 1; i <= 20; i++) {
+  let option = document.createElement("option");
+  option.value = i;
+  option.text = i;
+  unitSelect.appendChild(option);
 }
 
 function generate() {
+  let code = document.getElementById("code").value;
   let number = document.getElementById("number").value;
   let unit = document.getElementById("unit").value;
   let unitNumber = document.getElementById("unitNumber").value;
-  let role = document.getElementById("role").value;
-  let task = document.getElementById("task").value;
   let letter = document.getElementById("letter").value;
   let fourDigits = document.getElementById("fourDigits").checked;
 
-  if (!number || !unit || !task) {
-    alert("عبي البيانات الأساسية");
+  if (!code || !number || !unit || !unitNumber) {
+    alert("عبي كل البيانات");
     return;
   }
 
@@ -150,12 +129,7 @@ function generate() {
     number = number.padStart(4, '0');
   }
 
-  let fullUnit = unit;
-  if (unitNumber) {
-    fullUnit += " " + unitNumber;
-  }
-
-  let name = `${letter}-${fullUnit}-${role}-${task}-${number}`;
+  let name = `${code} | ${letter}-${number} | ${unit} ${unitNumber}`;
   document.getElementById("result").innerText = name;
 }
 
