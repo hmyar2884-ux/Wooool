@@ -1,143 +1,208 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>الاسم الميداني</title>
-
-<style>
-body {
-  font-family: Arial;
-  background: #eef2f7;
-  text-align: center;
-}
-
-.container {
-  background: white;
-  padding: 20px;
-  margin: 30px auto;
-  width: 340px;
-  border-radius: 15px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.1);
-}
-
-input, select, button {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
-
-button {
-  background: #0d6efd;
-  color: white;
-  font-weight: bold;
-  border: none;
-}
-
-.result {
-  background: #eee;
-  padding: 12px;
-  border-radius: 10px;
-  margin-top: 10px;
-  font-weight: bold;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء الاسم الميداني - حرس الحدود</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            padding-top: 50px;
+            margin: 0;
+        }
+        .main-container {
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h1 {
+            color: #4a4a4a;
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #f8f8f8;
+            font-size: 16px;
+            box-sizing: border-box;
+            color: #333;
+            text-align: center;
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-top: 10px;
+            color: #888;
+            font-size: 14px;
+        }
+        .checkbox-container input {
+            margin-left: 8px;
+        }
+        hr {
+            border: none;
+            border-top: 1px solid #333;
+            margin: 30px 0;
+        }
+        .result-label {
+            font-weight: bold;
+            text-align: right;
+            display: block;
+            margin-bottom: 15px;
+        }
+        #resultDisplay {
+            width: 100%;
+            padding: 20px;
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            min-height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-copy {
+            width: 100%;
+            padding: 15px;
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="container">
-  <h2>إنشاء الاسم الميداني</h2>
+<div class="main-container">
+    <h1>إنشاء الاسم الميداني</h1>
 
-  <!-- الكود الأول -->
-  <input type="text" id="code" placeholder="مثال: CD">
+    <div class="form-group">
+        <label>الرقم الميداني:</label>
+        <input type="text" id="pNum" placeholder="أدخل الرقم">
+        <div class="checkbox-container">
+            <span>تفعيل نظام 4 أرقام (0000)</span>
+            <input type="checkbox" id="fourDigits">
+        </div>
+    </div>
 
-  <!-- الرقم -->
-  <input type="number" id="number" placeholder="مثال: 220">
+    <div class="form-group">
+        <label>اختيار المسمى الميداني:</label>
+        <select id="callSign" onchange="generate()">
+            <option value="">--- اختر المسمى ---</option>
+            <option value="العمليات">العمليات</option>
+            <option value="نائب العمليات">نائب العمليات</option>
+            <option value="مجد">مجد</option>
+            <option value="ردع">ردع</option>
+            <option value="شهاب">شهاب</option>
+            <option value="سيف">سيف</option>
+            <option value="رمح">رمح</option>
+            <option value="حد">حد</option>
+            <option value="سلاح">سلاح</option>
+            <option value="مراقب جوي">مراقب جوي</option>
+            <option value="مراقب ارضي">مراقب ارضي</option>
+            <option value="سند">سند</option>
+            <option value="غفوة">غفوة</option>
+            <option value="تعديل / تزويد / شراء تأمين صحي / استلام ترقية">تعديل / تزويد / شراء تأمين صحي / استلام ترقية</option>
+        </select>
+    </div>
 
-  <label>
-    <input type="checkbox" id="fourDigits"> 4 أرقام (0220)
-  </label>
+    <div class="form-group">
+        <label>اختيار الحرف الأساسي (افتراضي: R):</label>
+        <select id="charBase" onchange="generate()">
+            <option value="R">R</option>
+            <option value="E">E</option>
+            <option value="G">G</option>
+            <option value="P">P</option>
+            <option value="H">H</option>
+            <option value="M">M</option>
+            <option value="S">S</option>
+        </select>
+    </div>
 
-  <!-- القسم -->
-  <select id="unit">
-    <option value="">--- اختر القسم ---</option>
-    <option>العمليات</option>
-    <option>نائب العمليات</option>
-    <option>مجد</option>
-    <option>ردع</option>
-    <option>شهاب</option>
-    <option>سيف</option>
-    <option>رمح</option>
-    <option>حد</option>
-    <option>سلاح</option>
-    <option>مراقب جوي</option>
-    <option>مراقب ارضي</option>
-    <option>سند</option>
-    <option>غفوة</option>
-  </select>
+    <hr>
 
-  <!-- رقم القسم 1-20 -->
-  <select id="unitNumber">
-    <option value="">--- رقم القسم ---</option>
-  </select>
+    <span class="result-label">الاسم الميداني الناتج:</span>
+    <div id="resultDisplay">يرجى اختيار المسمى</div>
 
-  <!-- الحرف -->
-  <select id="letter">
-    <option>E</option>
-    <option>M</option>
-    <option>S</option>
-    <option>G</option>
-    <option>P</option>
-    <option>H</option>
-    <option>R</option>
-  </select>
-
-  <button onclick="generate()">إنشاء الاسم</button>
-
-  <div class="result" id="result">الاسم يطلع هنا</div>
-
-  <button onclick="copyText()">نسخ 📋</button>
+    <button class="btn-copy" onclick="copyText()">
+        <span>🖨️</span> نسخ الاسم الميداني
+    </button>
 </div>
 
 <script>
-// توليد الأرقام من 1 إلى 20
-let unitSelect = document.getElementById("unitNumber");
-for (let i = 1; i <= 20; i++) {
-  let option = document.createElement("option");
-  option.value = i;
-  option.text = i;
-  unitSelect.appendChild(option);
-}
+    const pNum = document.getElementById('pNum');
+    const callSign = document.getElementById('callSign');
+    const charBase = document.getElementById('charBase');
+    const fourDigits = document.getElementById('fourDigits');
+    const resultDisplay = document.getElementById('resultDisplay');
 
-function generate() {
-  let code = document.getElementById("code").value;
-  let number = document.getElementById("number").value;
-  let unit = document.getElementById("unit").value;
-  let unitNumber = document.getElementById("unitNumber").value;
-  let letter = document.getElementById("letter").value;
-  let fourDigits = document.getElementById("fourDigits").checked;
+    function generate() {
+        let numVal = pNum.value.trim();
+        const callVal = callSign.value;
+        const charVal = charBase.value;
 
-  if (!code || !number || !unit || !unitNumber) {
-    alert("عبي كل البيانات");
-    return;
-  }
+        if (!callVal) {
+            resultDisplay.innerText = "يرجى اختيار المسمى";
+            return;
+        }
 
-  if (fourDigits) {
-    number = number.padStart(4, '0');
-  }
+        // الحالات الإدارية التي لا تتطلب رقم
+        const noNumTypes = ["غفوة", "تعديل / تزويد / شراء تأمين صحي / استلام ترقية"];
 
-  let name = `${code} | ${letter}-${number} | ${unit} ${unitNumber}`;
-  document.getElementById("result").innerText = name;
-}
+        if (noNumTypes.includes(callVal)) {
+            resultDisplay.innerText = `${callVal} : ${charVal}`;
+            return;
+        }
 
-function copyText() {
-  let text = document.getElementById("result").innerText;
-  navigator.clipboard.writeText(text);
-  alert("تم النسخ ✅");
-}
+        if (!numVal) numVal = "0";
+
+        // إذا تم تفعيل نظام 4 أرقام
+        if (fourDigits.checked) {
+            numVal = numVal.padStart(4, '0');
+        }
+
+        resultDisplay.innerText = `${callVal} ${numVal} : ${charVal}`;
+    }
+
+    // التحديث التلقائي عند الكتابة أو التغيير
+    pNum.addEventListener('input', generate);
+    fourDigits.addEventListener('change', generate);
+
+    function copyText() {
+        const text = resultDisplay.innerText;
+        if (text === "يرجى اختيار المسمى") return;
+        
+        navigator.clipboard.writeText(text).then(() => {
+            alert("تم النسخ: " + text);
+        });
+    }
 </script>
 
 </body>
