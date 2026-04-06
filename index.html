@@ -3,84 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مولد نداءات حرس الحدود - بولييتو</title>
+    <title>عمليات حرس الحدود | بولييتو</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #0d1117; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
-        .card { background: #161b22; padding: 25px; border-radius: 12px; border: 1px solid #30363d; width: 100%; max-width: 450px; text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
-        h2 { color: #58a6ff; font-size: 1.2rem; margin-bottom: 20px; border-bottom: 1px solid #30363d; padding-bottom: 15px; }
+        body { font-family: 'Tahoma', sans-serif; background-color: #0d1117; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
+        .card { background: #161b22; padding: 25px; border-radius: 12px; border: 2px solid #30363d; width: 100%; max-width: 480px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
+        h2 { color: #4caf50; font-size: 1.4rem; margin-bottom: 20px; border-bottom: 2px solid #238636; padding-bottom: 10px; }
         .input-group { margin-bottom: 15px; text-align: right; }
-        label { display: block; margin-bottom: 5px; font-size: 0.9rem; color: #8b949e; }
-        select, input { width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #30363d; background: #0d1117; color: white; font-size: 1rem; box-sizing: border-box; }
+        label { display: block; margin-bottom: 8px; font-size: 0.95rem; color: #8b949e; font-weight: bold; }
+        select, input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #30363d; background: #0d1117; color: white; font-size: 1rem; box-sizing: border-box; outline: none; }
+        select:focus, input:focus { border-color: #4caf50; }
         .row { display: flex; gap: 10px; }
-        button { width: 100%; padding: 14px; background-color: #238636; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1rem; margin-top: 10px; transition: 0.2s; }
-        button:hover { background-color: #2ea043; }
-        #outputArea { margin-top: 20px; display: none; }
-        #result { background: #010409; padding: 15px; border-radius: 6px; border: 1px dashed #238636; color: #79c0ff; font-family: monospace; font-size: 1.1rem; word-break: break-all; margin-bottom: 10px; text-align: center; }
+        button { width: 100%; padding: 15px; background-color: #238636; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1.1rem; margin-top: 15px; transition: 0.3s; }
+        button:hover { background-color: #2ea043; transform: translateY(-2px); }
+        #outputArea { margin-top: 25px; display: none; }
+        #result { background: #010409; padding: 20px; border-radius: 8px; border: 1px dashed #4caf50; color: #79c0ff; font-family: 'Courier New', Courier, monospace; font-size: 1.2rem; word-break: break-all; margin-bottom: 15px; text-align: center; font-weight: bold; }
         .copy-btn { background-color: #30363d; font-size: 0.9rem; }
     </style>
 </head>
 <body>
+
 <div class="card">
-    <h2>تجهيز نداء عمليات بولييتو</h2>
+    <h2>⚔️ عمليات حرس الحدود ⚔️</h2>
+    
     <div class="input-group">
-        <label>الوحدة / المسمى الميداني</label>
-        <select id="callType">
-            <optgroup label="القيادة">
-                <option value="قيادة حرس الحدود">قيادة حرس الحدود</option>
-                <option value="قائد حرس الحدود">قائد حرس الحدود</option>
-                <option value="نائب قائد حرس الحدود">نائب قائد حرس الحدود</option>
-            </optgroup>
-            <optgroup label="المسميات الميدانية">
-                <option value="مجد">مجد</option>
-                <option value="ردع">ردع</option>
-                <option value="شهاب">شهاب</option>
-                <option value="سيف">سيف</option>
-                <option value="رمح">رمح</option>
-                <option value="حد">حد</option>
-                <option value="سلاح">سلاح</option>
-                <option value="حرس">حرس</option>
-                <option value="شاهين">شاهين</option>
-                <option value="ساحل">ساحل</option>
-                <option value="سجن">سجن</option>
-            </optgroup>
-            <optgroup label="أخرى">
-                <option value="شرطة عسكرية">شرطة عسكرية</option>
-                <option value="ضابط خفر">ضابط خفر</option>
-                <option value="حزم">حزم</option>
-            </optgroup>
+        <label>الرتبة العسكرية</label>
+        <select id="pRank">
+            <option value="R-001">قائد حرس الحدود (R-001)</option>
+            <option value="R-002">نائب قائد حرس الحدود (R-002)</option>
+            <option value="لواء">لواء</option>
+            <option value="عميد">عميد</option>
+            <option value="عقيد">عقيد</option>
+            <option value="مقدم">مقدم</option>
+            <option value="رائد">رائد</option>
+            <option value="نقيب">نقيب</option>
+            <option value="ملازم أول">ملازم أول</option>
+            <option value="ملازم">ملازم</option>
+            <option value="رئيس رقباء">رئيس رقباء</option>
+            <option value="رقيب أول">رقيب أول</option>
+            <option value="رقيب">رقيب</option>
+            <option value="وكيل رقيب">وكيل رقيب</option>
+            <option value="عريف">عريف</option>
+            <option value="جندي أول">جندي أول</option>
+            <option value="جندي">جندي</option>
         </select>
     </div>
+
+    <div class="input-group">
+        <label>المسمى الميداني / الإجراء</label>
+        <select id="callSign">
+            <option value="مجد">مجد</option>
+            <option value="ردع">ردع</option>
+            <option value="شهاب">شهاب</option>
+            <option value="سيف">سيف</option>
+            <option value="رمح">رمح</option>
+            <option value="حرس">حرس</option>
+            <option value="حد">حد</option>
+            <option value="سلاح">سلاح</option>
+            <option value="شاهين">شاهين</option>
+            <option value="ساحل">ساحل</option>
+            <option value="سجن">سجن</option>
+            <option value="غفوة">غفوة</option>
+            <option value="تعديل و تزويد">تعديل و تزويد</option>
+            <option value="تأمين صحي">تأمين صحي</option>
+            <option value="شراء مركبة">شراء مركبة</option>
+            <option value="استلام ترقية">استلام ترقية</option>
+            <option value="حزم">حزم</option>
+            <option value="خاصة 1">خاصة 1</option>
+        </select>
+    </div>
+
     <div class="row">
-        <div class="input-group" style="flex: 1;">
+        <div style="flex: 1;">
             <label>الرقم</label>
-            <input type="number" id="callNum" value="1">
+            <input type="number" id="pNum" value="1">
         </div>
-        <div class="input-group" style="flex: 2;">
+        <div style="flex: 2;">
             <label>الكود العسكري</label>
-            <input type="text" id="militaryCode" placeholder="R-000">
+            <input type="text" id="mCode" placeholder="R-426">
         </div>
     </div>
-    <button onclick="generateCall()">توليد السطر للتقرير</button>
+
+    <button onclick="generate()">توليد السطر</button>
+
     <div id="outputArea">
         <div id="result"></div>
-        <button class="copy-btn" onclick="copyResult()">نسخ السطر</button>
+        <button class="copy-btn" onclick="copy()">نسخ للتقرير</button>
     </div>
 </div>
+
 <script>
-    function generateCall() {
-        const type = document.getElementById('callType').value;
-        const num = document.getElementById('callNum').value;
-        const code = document.getElementById('militaryCode').value || "R-000";
-        const noNumTypes = ["قيادة حرس الحدود", "قائد حرس الحدود", "نائب قائد حرس الحدود", "شرطة عسكرية", "ضابط خفر"];
-        let finalText = noNumTypes.includes(type) ? `${type} : ${code}` : `${type} ${num} : ${code}`;
+    function generate() {
+        const rank = document.getElementById('pRank').value;
+        const call = document.getElementById('callSign').value;
+        const num = document.getElementById('pNum').value;
+        const code = document.getElementById('mCode').value || "R-000";
+        
+        const noNumTypes = ["تعديل و تزويد", "تأمين صحي", "شراء مركبة", "استلام ترقية"];
+        let finalText = "";
+        
+        if (noNumTypes.includes(call)) {
+            finalText = `${call} : ${code} (${rank})`;
+        } else {
+            finalText = `${call} ${num} : ${code} (${rank})`;
+        }
+        
         document.getElementById('result').innerText = finalText;
         document.getElementById('outputArea').style.display = 'block';
     }
-    function copyResult() {
+
+    function copy() {
         const text = document.getElementById('result').innerText;
         navigator.clipboard.writeText(text);
         alert("تم النسخ بنجاح!");
     }
 </script>
+
 </body>
 </html>
