@@ -1,195 +1,136 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إنشاء الاسم الميداني - حرس الحدود</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #ffffff;
-            display: flex;
-            justify-content: center;
-            padding-top: 50px;
-            margin: 0;
-        }
-        .main-container {
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-        }
-        h1 {
-            color: #4a4a4a;
-            font-size: 24px;
-            margin-bottom: 30px;
-        }
-        .form-group {
-            text-align: right;
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            font-weight: bold;
-            color: #666;
-            margin-bottom: 10px;
-            font-size: 15px;
-        }
-        input[type="text"], select {
-            width: 100%;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            background-color: #f8f8f8;
-            font-size: 16px;
-            box-sizing: border-box;
-            color: #333;
-            text-align: center;
-        }
-        .checkbox-container {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            margin-top: 10px;
-            color: #888;
-            font-size: 14px;
-        }
-        .checkbox-container input {
-            margin-left: 8px;
-        }
-        hr {
-            border: none;
-            border-top: 1px solid #333;
-            margin: 30px 0;
-        }
-        .result-label {
-            font-weight: bold;
-            text-align: right;
-            display: block;
-            margin-bottom: 15px;
-        }
-        #resultDisplay {
-            width: 100%;
-            padding: 20px;
-            background-color: #f1f1f1;
-            border-radius: 10px;
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            box-sizing: border-box;
-        }
-        .btn-copy {
-            width: 100%;
-            padding: 15px;
-            background-color: #3b82f6;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إنشاء الاسم الميداني</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #f4f6f9;
+  text-align: center;
+}
+
+.container {
+  background: white;
+  padding: 20px;
+  margin: 30px auto;
+  width: 330px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h2 {
+  margin-bottom: 15px;
+}
+
+input, select, button {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+button {
+  background: #007bff;
+  color: white;
+  border: none;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+.result {
+  background: #eee;
+  padding: 12px;
+  border-radius: 10px;
+  margin-top: 10px;
+  font-weight: bold;
+}
+</style>
+
 </head>
+
 <body>
 
-<div class="main-container">
-    <h1>إنشاء الاسم الميداني</h1>
+<div class="container">
+  <h2>إنشاء الاسم الميداني</h2>
 
-    <div class="form-group">
-        <label>الرقم الميداني:</label>
-        <input type="text" id="pNum" placeholder="أدخل الرقم">
-        <div class="checkbox-container">
-            <span>تفعيل نظام 4 أرقام (0000)</span>
-            <input type="checkbox" id="fourDigits">
-        </div>
-    </div>
+  <!-- الرقم -->
+  <input type="number" id="number" placeholder="أدخل الرقم">
 
-    <div class="form-group">
-        <label>اختيار المسمى الميداني:</label>
-        <select id="callSign" onchange="generate()">
-            <option value="">--- اختر المسمى ---</option>
-            <option value="مجد">مجد</option>
-            <option value="سيف">سيف</option>
-            <option value="حرس">حرس</option>
-            <option value="حد">حد</option>
-            <option value="ردع">ردع</option>
-            <option value="شهاب">شهاب</option>
-            <option value="رمح">رمح</option>
-            <option value="سلاح">سلاح</option>
-            <option value="شاهين">شاهين</option>
-            <option value="ساحل">ساحل</option>
-            <option value="سجن">سجن</option>
-            <option value="حزم">حزم</option>
-            <option value="خاصة 1">خاصة 1</option>
-        </select>
-    </div>
+  <label>
+    <input type="checkbox" id="fourDigits"> تفعيل 4 أرقام (0000)
+  </label>
 
-    <div class="form-group">
-        <label>اختيار الحرف الأساسي (افتراضي: R):</label>
-        <select id="charBase" onchange="generate()">
-            <option value="R">R</option>
-            <option value="E">E</option>
-            <option value="G">G</option>
-            <option value="P">P</option>
-            <option value="H">H</option>
-            <option value="M">M</option>
-            <option value="S">S</option>
-        </select>
-    </div>
+  <!-- المكان -->
+  <select id="place">
+    <option value="">--- اختر المكان ---</option>
+    <option value="حد">حد</option>
+    <option value="رمح">رمح</option>
+    <option value="سيف">سيف</option>
+    <option value="سلاح">سلاح</option>
+    <option value="ردع">ردع</option>
+    <option value="غفوة">غفوة</option>
+  </select>
 
-    <hr>
+  <!-- المهمة -->
+  <select id="task">
+    <option value="">--- اختر المهمة ---</option>
+    <option value="تعديل">تعديل</option>
+    <option value="تزويد">تزويد</option>
+    <option value="شراء تأمين صحي">شراء تأمين صحي</option>
+  </select>
 
-    <span class="result-label">الاسم الميداني الناتج:</span>
-    <div id="resultDisplay">يرجى اختيار المسمى</div>
+  <!-- الحرف -->
+  <select id="letter">
+    <option value="E">E</option>
+    <option value="M">M</option>
+    <option value="S">S</option>
+    <option value="G">G</option>
+    <option value="P">P</option>
+    <option value="H">H</option>
+    <option value="R">R</option>
+  </select>
 
-    <button class="btn-copy" onclick="copyText()">
-        <span>🖨️</span> نسخ الاسم الميداني
-    </button>
+  <button onclick="generate()">إنشاء الاسم</button>
+
+  <div class="result" id="result">الاسم يطلع هنا</div>
+
+  <button onclick="copyText()">نسخ الاسم 📋</button>
 </div>
 
 <script>
-    const pNum = document.getElementById('pNum');
-    const callSign = document.getElementById('callSign');
-    const charBase = document.getElementById('charBase');
-    const fourDigits = document.getElementById('fourDigits');
-    const resultDisplay = document.getElementById('resultDisplay');
+function generate() {
+  let number = document.getElementById("number").value;
+  let place = document.getElementById("place").value;
+  let task = document.getElementById("task").value;
+  let letter = document.getElementById("letter").value;
+  let fourDigits = document.getElementById("fourDigits").checked;
 
-    function generate() {
-        let numVal = pNum.value.trim();
-        const callVal = callSign.value;
-        const charVal = charBase.value;
+  if (!number || !place || !task) {
+    alert("عبي كل البيانات");
+    return;
+  }
 
-        if (!callVal) {
-            resultDisplay.innerText = "يرجى اختيار المسمى";
-            return;
-        }
+  // تحويل إلى 4 أرقام
+  if (fourDigits) {
+    number = number.padStart(4, '0');
+  }
 
-        if (!numVal) numVal = "0";
+  let name = `${letter}-${place}-${task}-${number}`;
+  document.getElementById("result").innerText = name;
+}
 
-        // إذا تم تفعيل نظام 4 أرقام
-        if (fourDigits.checked) {
-            numVal = numVal.padStart(4, '0');
-        }
-
-        resultDisplay.innerText = `${callVal} ${numVal} : ${charVal}`;
-    }
-
-    // التحديث عند الكتابة أو تغيير المربع
-    pNum.addEventListener('input', generate);
-    fourDigits.addEventListener('change', generate);
-
-    function copyText() {
-        const text = resultDisplay.innerText;
-        if (text === "يرجى اختيار المسمى") return;
-        
-        navigator.clipboard.writeText(text).then(() => {
-            alert("تم النسخ: " + text);
-        });
-    }
+function copyText() {
+  let text = document.getElementById("result").innerText;
+  navigator.clipboard.writeText(text);
+  alert("تم النسخ ✅");
+}
 </script>
 
 </body>
