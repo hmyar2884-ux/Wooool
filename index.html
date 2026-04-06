@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>إنشاء الاسم الميداني</title>
+<title>الاسم الميداني</title>
 
 <style>
 body {
   font-family: Arial;
-  background: #f4f6f9;
+  background: #eef2f7;
   text-align: center;
 }
 
@@ -16,13 +16,9 @@ body {
   background: white;
   padding: 20px;
   margin: 30px auto;
-  width: 330px;
+  width: 340px;
   border-radius: 15px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-h2 {
-  margin-bottom: 15px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
 }
 
 input, select, button {
@@ -34,14 +30,10 @@ input, select, button {
 }
 
 button {
-  background: #007bff;
+  background: #0d6efd;
   color: white;
-  border: none;
   font-weight: bold;
-}
-
-button:hover {
-  background: #0056b3;
+  border: none;
 }
 
 .result {
@@ -52,7 +44,6 @@ button:hover {
   font-weight: bold;
 }
 </style>
-
 </head>
 
 <body>
@@ -64,65 +55,107 @@ button:hover {
   <input type="number" id="number" placeholder="أدخل الرقم">
 
   <label>
-    <input type="checkbox" id="fourDigits"> تفعيل 4 أرقام (0000)
+    <input type="checkbox" id="fourDigits"> 4 أرقام (0000)
   </label>
 
-  <!-- المكان -->
-  <select id="place">
-    <option value="">--- اختر المكان ---</option>
-    <option value="حد">حد</option>
-    <option value="رمح">رمح</option>
-    <option value="سيف">سيف</option>
-    <option value="سلاح">سلاح</option>
-    <option value="ردع">ردع</option>
-    <option value="غفوة">غفوة</option>
+  <!-- القسم -->
+  <select id="unit" onchange="showUnitNumber()">
+    <option value="">--- اختر القسم ---</option>
+    <option>العمليات</option>
+    <option>نائب العمليات</option>
+    <option>مجد</option>
+    <option>ردع</option>
+    <option>شهاب</option>
+    <option>سيف</option>
+    <option>رمح</option>
+    <option>حد</option>
+    <option>سلاح</option>
+    <option>سند</option>
+    <option>غفوة</option>
+  </select>
+
+  <!-- رقم القسم -->
+  <div id="unitNumberBox" style="display:none;">
+    <select id="unitNumber">
+      <option value="">--- رقم القسم ---</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+  </div>
+
+  <!-- الدور -->
+  <select id="role">
+    <option value="">--- نوع المهمة ---</option>
+    <option>مراقب جوي</option>
+    <option>مراقب ارضي</option>
   </select>
 
   <!-- المهمة -->
   <select id="task">
     <option value="">--- اختر المهمة ---</option>
-    <option value="تعديل">تعديل</option>
-    <option value="تزويد">تزويد</option>
-    <option value="شراء تأمين صحي">شراء تأمين صحي</option>
+    <option>تعديل</option>
+    <option>تزويد</option>
+    <option>شراء تأمين صحي</option>
+    <option>استلام ترقية</option>
   </select>
 
   <!-- الحرف -->
   <select id="letter">
-    <option value="E">E</option>
-    <option value="M">M</option>
-    <option value="S">S</option>
-    <option value="G">G</option>
-    <option value="P">P</option>
-    <option value="H">H</option>
-    <option value="R">R</option>
+    <option>E</option>
+    <option>M</option>
+    <option>S</option>
+    <option>G</option>
+    <option>P</option>
+    <option>H</option>
+    <option>R</option>
   </select>
 
   <button onclick="generate()">إنشاء الاسم</button>
 
   <div class="result" id="result">الاسم يطلع هنا</div>
 
-  <button onclick="copyText()">نسخ الاسم 📋</button>
+  <button onclick="copyText()">نسخ 📋</button>
 </div>
 
 <script>
+function showUnitNumber() {
+  let unit = document.getElementById("unit").value;
+  let box = document.getElementById("unitNumberBox");
+
+  if (unit) {
+    box.style.display = "block";
+  } else {
+    box.style.display = "none";
+  }
+}
+
 function generate() {
   let number = document.getElementById("number").value;
-  let place = document.getElementById("place").value;
+  let unit = document.getElementById("unit").value;
+  let unitNumber = document.getElementById("unitNumber").value;
+  let role = document.getElementById("role").value;
   let task = document.getElementById("task").value;
   let letter = document.getElementById("letter").value;
   let fourDigits = document.getElementById("fourDigits").checked;
 
-  if (!number || !place || !task) {
-    alert("عبي كل البيانات");
+  if (!number || !unit || !task) {
+    alert("عبي البيانات الأساسية");
     return;
   }
 
-  // تحويل إلى 4 أرقام
   if (fourDigits) {
     number = number.padStart(4, '0');
   }
 
-  let name = `${letter}-${place}-${task}-${number}`;
+  let fullUnit = unit;
+  if (unitNumber) {
+    fullUnit += " " + unitNumber;
+  }
+
+  let name = `${letter}-${fullUnit}-${role}-${task}-${number}`;
   document.getElementById("result").innerText = name;
 }
 
